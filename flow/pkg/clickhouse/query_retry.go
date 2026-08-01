@@ -79,6 +79,8 @@ func Exec(ctx context.Context, logger log.Logger,
 	if ex, ok := errors.AsType[*clickhouse.Exception](err); ok {
 		isMV := strings.Contains(ex.Error(), "while pushing to view")
 		if chproto.Error(ex.Code) == chproto.ErrIncorrectData {
+			logger.Error("[query] unretryable error", slog.Any("error", err), slog.String("query", query), slog.Any("args", args))
+
 			ex.Message = "REDACTED"
 		}
 		if isMV {

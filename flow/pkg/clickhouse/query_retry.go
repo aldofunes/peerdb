@@ -81,7 +81,7 @@ func Exec(ctx context.Context, logger log.Logger,
 		if chproto.Error(ex.Code) == chproto.ErrIncorrectData {
 			logger.Error("[query] unretryable error", slog.Any("error", err), slog.String("query", query), slog.Any("args", args))
 
-			ex.Message = "REDACTED"
+			// ex.Message = "REDACTED"
 		}
 		if isMV {
 			return NewViewError(ex)
